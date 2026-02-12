@@ -2,6 +2,8 @@ doctype
 html lang="es"
   head
     meta charset="utf-8"
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta name="description" content="Web personal de Jose Vicente Carratalá — desarrollador, profesor y diseñador"
     link rel="stylesheet" href="JVestilo/JVestilo.php"
   body class="flex fd-column fj-center fa-center b-lightgrey ff-sans-serif p-20"
     header class="w-800 b-white p-20 ta-center flex fd-column g-20"
@@ -47,5 +49,5 @@ html lang="es"
                 p #{ $pg['contenido'] }
 
     footer class="w-800 b-white p-20 ta-center"
-      | Piedepagina
+      p © 2025 Jose Vicente Carratalá — Todos los derechos reservados
 

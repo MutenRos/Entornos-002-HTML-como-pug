@@ -38,3 +38,13 @@
   }
 ?>
 .td-none{text-decoration:none;}
+<?php
+// Mejora: transiciones suaves en enlaces y hover para mejorar la experiencia visual
+?>
+a{transition:color 0.2s ease, background 0.2s ease;}
+a:hover{opacity:0.8;}
+.shadow{box-shadow:0 2px 8px rgba(0,0,0,0.12);}
+.br-8{border-radius:8px;}
+.br-12{border-radius:12px;}
+* {box-sizing:border-box;}
+body{margin:0;}

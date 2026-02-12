@@ -1,14 +1,22 @@
 <?php
+// Controlador principal: carga datos de MySQL y renderiza la plantilla JVpug
 require __DIR__ . "/jvpug.php";
 
-$c = new mysqli("localhost", "jocarsapress", "jocarsapress", "jocarsapress");
-$c->set_charset("utf8mb4");
+// Mejora: manejo de errores en la conexión a base de datos
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
+    $c = new mysqli("localhost", "jocarsapress", "jocarsapress", "jocarsapress");
+    $c->set_charset("utf8mb4");
+} catch (mysqli_sql_exception $e) {
+    die("Error de conexión a la base de datos: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8'));
+}
 
 ob_start();
 include __DIR__ . "/JVestilo/JVestilo.php";
 $css = ob_get_clean();
 
-$p = $_GET['p'] ?? null;
+// Mejora: sanitizar parámetro GET
+$p = isset($_GET['p']) ? trim($_GET['p']) : null;
 
 $paginas = [];
 $r = $c->query("SELECT * FROM paginas;");
@@ -33,6 +41,9 @@ if ($p === "blog") {
   $stmt->close();
 }
 
+// Mejora: cabecera Content-Type para asegurar UTF-8 en el navegador
+header('Content-Type: text/html; charset=utf-8');
+
 echo JVpug::renderFile(__DIR__ . "/miweb.jvpug", [
   "css" => $css,
   "p" => $p,
@@ -40,4 +51,7 @@ echo JVpug::renderFile(__DIR__ . "/miweb.jvpug", [
   "entradas" => $entradas,
   "pagina" => $pagina,
 ]);
+
+// Mejora: cerrar la conexión MySQL al terminar
+$c->close();
 

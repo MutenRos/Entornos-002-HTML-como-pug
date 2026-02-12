@@ -7,7 +7,12 @@
    - Texto: lo que sobra al final de la línea
    ========================================================= */
 
-$pug = file_get_contents("index.jvpug");
+// Mejora: comprobar que el archivo de plantilla existe antes de leerlo
+$archivoPlantilla = "index.jvpug";
+if (!file_exists($archivoPlantilla)) {
+    die("Error: no se encontró la plantilla " . htmlspecialchars($archivoPlantilla, ENT_QUOTES, 'UTF-8'));
+}
+$pug = file_get_contents($archivoPlantilla);
 
 function render_mini_pug(string $src): string {
   $lines = preg_split("/\r\n|\r|\n/", $src);
@@ -75,6 +80,8 @@ function render_mini_pug(string $src): string {
   return implode("\n", $out);
 }
 
+// Mejora: añadir doctype HTML5 antes de renderizar
+echo "<!DOCTYPE html>\n";
 echo render_mini_pug($pug);
 
 ?>
